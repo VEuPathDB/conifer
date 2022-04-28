@@ -93,17 +93,22 @@ class UsageMonitor(object):
 class ConiferCLI(object):
   def __init__(self):
     parser = argparse.ArgumentParser(
-      description='EBRC Website Configuration Manager',
+      description='GUS Build Configuration Manager',
       usage='''
+
 conifer <command> [<args>]
 
 Available commands:
-  install   Install Conifer into GUS_HOME.
 
-  seed   Generate a seed file that can be used as
-  the basis for a minimal user-specific vars file.
+  install    Install conifer tool and files (templates, vars)
+             for a particular cohort into GUS_HOME
 
-  configure   Generate and deploy configurations.
+  seed       Generate a seed file that can be used as
+             the basis for a minimal user-specific vars file
+
+  configure  Use installed templates and var files to produce
+             a set of populated configuration files and deploy
+
 '''
     )
 
@@ -116,15 +121,6 @@ Available commands:
       ('WDKTemplateSite',   'WDKTemplate'),
       ('OrthoMCLWebsite',   'OrthoMCL'),
       ('EuPathDBIrods',     'EuPathDBIrods'),
-## This is the original order up until 14 April 2018
-## Retained temporarily for reference in case the BUILDROOT_LIST order
-## is a brown-bag.
-#       ('ClinEpiWebsite',    'ClinEpi'),
-#       ('OrthoMCLWebsite',   'OrthoMCL'),
-#       ('MicrobiomeWebsite', 'Microbiome'),
-#       ('ApiCommonWebsite',  'ApiCommon'),
-#       ('EuPathDBIrods',     'EuPathDBIrods'),
-#       ('WDKTemplateSite',   'WDKTemplate'),
     ])
 
     self.command = None
@@ -320,7 +316,7 @@ Available commands:
     cpcore = call(cmd)
 
     # install executable
-    cmd = ['rsync', '-a', self.project_home + '/FgpUtil/Util/bin/conifer',
+    cmd = ['rsync', '-a', self.project_home + '/conifer/bin/conifer',
       self.gus_home + '/bin/' ]
     if self.verbose: print(' '.join(cmd))
     cpbin = call(cmd)
@@ -376,8 +372,8 @@ Available commands:
       if not os.path.exists(path):
         raise Exception("Source directory '{}' not found.".format(path))
       clean_paths.append(path.rstrip("/"))
-    if self.project_home + '/FgpUtil/Util/lib/conifer' not in clean_paths:
-      clean_paths.append(self.project_home + '/FgpUtil/Util/lib/conifer')
+    if self.project_home + '/conifer/lib/conifer' not in clean_paths:
+      clean_paths.append(self.project_home + '/conifer/lib/conifer')
     if self.project_home + '/' + self.cohort_root + '/Model/lib/conifer' not in clean_paths:
       clean_paths.append(self.project_home + '/' + self.cohort_root + '/Model/lib/conifer')
     return clean_paths
