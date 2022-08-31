@@ -127,6 +127,7 @@ Available commands:
     self.component = None
     self.hostname = None
     self.webapp_ctx = None
+    self.tomcat_webapp_ctx = None
     self.project_home = None
     self.gus_home = None
     self.conifer_home = None
@@ -199,6 +200,10 @@ Available commands:
     if self.webapp_ctx is not None:
       ansible_extra_vars.extend([
         '-e', 'derived_webapp_ctx=' + self.webapp_ctx,
+      ])
+    if self.tomcat_webapp_ctx is not None:
+      ansible_extra_vars.extend([
+        '-e', 'tomcat_webapp_ctx=' + self.tomcat_webapp_ctx,
       ])
     if self.extra_vars is not None:
       for extra_var in self.extra_vars:
@@ -497,6 +502,11 @@ Available commands:
     # Ignore any ENV and CLI args for gus_home and project_home
     self.gus_home = os.path.realpath(self.www_path + '/' + hostname + '/gus_home')
     self.project_home = os.path.realpath(self.www_path + '/' + hostname + '/project_home')
+
+    if self.tomcat_webapp_ctx is None:
+      self.tomcat_webapp_ctx = os.path.basename(os.path.realpath(self.www_path + '/' + hostname))
+
+    print("Using Tomcat webapp context: {}".format(self.tomcat_webapp_ctx))
 
     if self.hostname is None:
       self.hostname = hostname
