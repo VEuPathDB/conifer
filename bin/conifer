@@ -411,6 +411,7 @@ Available commands:
     parser.add_argument("--cohort-root", help="Where to initiate the search for the cohort data.")
     parser.add_argument("--project", help="")
     parser.add_argument("--webapp-ctx", help="")
+    parser.add_argument("--tomcat-webapp-ctx", help="")
     parser.add_argument("--env", help="configuration environment; typically 'development' or 'production'")
     parser.add_argument("--site-vars", help="")
     parser.add_argument("--verbose", action='store_true', help="Show some process details.")
