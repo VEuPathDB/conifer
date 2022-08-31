@@ -507,8 +507,6 @@ Available commands:
     if self.tomcat_webapp_ctx is None:
       self.tomcat_webapp_ctx = os.path.basename(os.path.realpath(self.www_path + '/' + hostname))
 
-    print("Using Tomcat webapp context: {}".format(self.tomcat_webapp_ctx))
-
     if self.hostname is None:
       self.hostname = hostname
 
