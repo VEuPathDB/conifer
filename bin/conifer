@@ -179,7 +179,8 @@ Available commands:
       '-e', 'derived_cohort=' + self.cohort,
       '-e', 'derived_gus_home=' + self.gus_home,
       '-e', 'site_vars=' + os.path.basename(self.site_vars),
-      '-e', 'templates_config=' + self.cohort + '/templates.yml',
+      '-e', 'templates_config=' + self.project_home + '/' + self.cohort_root \
+      + '/Model/lib/conifer/roles/conifer/vars/' + self.cohort + '/templates.yml',
     ]
 
     # if --project is explicitly set on CLI, use that to override any
