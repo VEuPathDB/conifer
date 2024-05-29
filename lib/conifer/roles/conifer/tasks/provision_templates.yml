@@ -1,3 +1,9 @@
+- name: debug
+  debug:
+    var: vars.conifer
+- name: debug2
+  debug:
+    var: templates
 - name: provision configurations from templates
   template_with_vars:
     src: "{{ templates[item]['src'] }}"

@@ -387,7 +387,7 @@ Available commands:
     yml_vars = {}
     with open(yml, 'r') as stream:
       try:
-        yml_vars = yaml.load(stream)
+        yml_vars = yaml.safe_load(stream)
       except yaml.YAMLError as yerr:
         raise Exception("Failed to parse {}: {}".format(yml, yerr))
     tmpl_vars = {}
@@ -395,7 +395,13 @@ Available commands:
     tmpl_vars.update(deepcopy(yml_vars))
     dl = DataLoader()
     templar = Templar(loader=dl, variables=tmpl_vars)
-    return templar.template(yml_vars)
+    template = templar.template(yml_vars)
+    if not isinstance(custom_vars, template):
+      raise AnsibleError(
+        "Is our yaml parsing into a dictionary?  No, got a {1}.".
+          format(type(template).__name__)
+      )
+    return template
 
   def _parse_args(self, required=None):
     if required is None:
@@ -422,6 +428,13 @@ Available commands:
     # two argvs, ie the command (conifer) and the subcommand (configure)
     args = parser.parse_args(sys.argv[2:])
     self.args = args
+
+    print("Top level conifer args.  Is it a dict?")
+    if not isinstance(custom_vars, dict):
+      print("NO!")
+    else:
+      print("YES!")
+
     self.__dict__.update(copy(args.__dict__))
 
     if self.command == 'install':
