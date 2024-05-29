@@ -396,7 +396,9 @@ Available commands:
     dl = DataLoader()
     templar = Templar(loader=dl, variables=tmpl_vars)
     template = templar.template(yml_vars)
-    if not isinstance(custom_vars, template):
+
+    print("Parsing yaml into dictionary now! " + yml)
+    if not isinstance(template, dict):
       raise AnsibleError(
         "Is our yaml parsing into a dictionary?  No, got a {1}.".
           format(type(template).__name__)
@@ -430,8 +432,9 @@ Available commands:
     self.args = args
 
     print("Top level conifer args.  Is it a dict?")
-    if not isinstance(custom_vars, dict):
-      print("NO!")
+
+    if not isinstance(self.args, dict):
+      print("NO! It's a " + type(self.args).__name__)
     else:
       print("YES!")
 

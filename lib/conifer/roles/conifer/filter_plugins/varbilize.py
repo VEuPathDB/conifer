@@ -37,16 +37,25 @@ class Varbilize:
     }
     '''
     if isinstance(d, dict):
-      print("Found a dictionary: " + d)
+      print("Found a dictionary!")
+      print(d)
       for k in d.keys():
         if isinstance(d[k], dict):
+          print("Found a subdictionary!")
+          print(d[k])
           self.scrub(d[k])
           if len(d[k]) == 0:
             del d[k]
         elif d[k] is None or (isinstance(d[k], basestring) and self.re_filter.match(d[k])):
+          print("Found none or string")
+          print(d[k])
           del d[k]
-    else
-      print("Not a dictionary! " + d)
+        else:
+          print("Found non-dictionary value!")
+          print(d[k])
+    else:
+      print("Not a dictionary!")
+      print(d)
     return d
 
   def pluck(self, id, od = {}):

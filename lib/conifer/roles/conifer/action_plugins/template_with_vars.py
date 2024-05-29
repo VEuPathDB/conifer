@@ -3,6 +3,7 @@ from copy import deepcopy
 from ansible.plugins.action import ActionBase
 from ansible.plugins.action.template import ActionModule as TemplateActionModule
 from ansible.errors import AnsibleError
+import ast
 
 class ActionModule(TemplateActionModule, ActionBase):
   '''
@@ -21,10 +22,16 @@ class ActionModule(TemplateActionModule, ActionBase):
       return super(ActionModule, self).run(tmp, task_vars)
 
     if not isinstance(custom_vars, dict):
+      print("WARNING: not a dictionary (will try to coerce)")
+      print(custom_vars)
       raise AnsibleError(
         "The {0} vars parameter must be a dictionary, got a {1}.".
           format(self._task.action, type(custom_vars).__name__)
       )
+      #custom_vars = custom_vars.replace(", u'",",u'").replace(", u\"",",u\"")
+      #print("After replacement")
+      #print(custom_vars)
+      #custom_vars = ast.literal_eval(custom_vars)
 
     custom_vars['hostvars'] = deepcopy(custom_vars)
     custom_vars['vars'] = deepcopy(custom_vars)
