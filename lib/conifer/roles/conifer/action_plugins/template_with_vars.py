@@ -12,13 +12,18 @@ class ActionModule(TemplateActionModule, ActionBase):
   TRANSFERS_FILES = False
 
   def run(self, tmp=None, task_vars=None):
-    custom_vars = self._task.args.get('vars', None)
+    custom_vars = self._task.args.get('vars_json', None)
 
     # remove parameters not allowed, nor needed, by parent ActionModule    
-    if 'vars' in self._task.args:
-      self._task.args.pop('vars')
+    if 'vars_json' in self._task.args:
+      self._task.args.pop('vars_json')
+
+    print("custom_vars type and value before check: " + type(custom_vars).__name__)
+    print(custom_vars)
 
     if custom_vars is None:
+      print("No custom vars present.  Using task vars:")
+      print(task_vars)
       return super(ActionModule, self).run(tmp, task_vars)
 
     if not isinstance(custom_vars, dict):
@@ -28,12 +33,10 @@ class ActionModule(TemplateActionModule, ActionBase):
         "The {0} vars parameter must be a dictionary, got a {1}.".
           format(self._task.action, type(custom_vars).__name__)
       )
-      #custom_vars = custom_vars.replace(", u'",",u'").replace(", u\"",",u\"")
-      #print("After replacement")
-      #print(custom_vars)
       #custom_vars = ast.literal_eval(custom_vars)
 
     custom_vars['hostvars'] = deepcopy(custom_vars)
     custom_vars['vars'] = deepcopy(custom_vars)
+    custom_vars['ansible_facts'] = deepcopy(custom_vars)
 
     return super(ActionModule, self).run(tmp, custom_vars)

@@ -5,10 +5,11 @@
   debug:
     var: templates
 - name: provision configurations from templates
+  debugger: on_failed
   template_with_vars:
     src: "{{ templates[item]['src'] }}"
     dest: "{{ templates[item]['dest'] }}"
-    vars: "{{ vars.conifer }}"
+    vars_json: "{{ vars.conifer|conifer_scrub('=c=') }}"
     backup: "{{ vars.conifer.conifer_backup|default('yes') }}"
   with_items: 
     - "{{ templates.keys() }}"

@@ -500,6 +500,7 @@ Available commands:
   def _run_playbook(self, ansible_extra_vars, playbook):
     shell_env = os.environ.copy()
     shell_env["ANSIBLE_CONFIG"] = self.conifer_home + '/conifer.cfg'
+    #shell_env["ANSIBLE_ENABLE_TASK_DEBUGGER"] = "True"
     cmd = ['ansible-playbook', '-i', 'localhost,']
     cmd.extend(ansible_extra_vars)
     cmd.extend([playbook])

@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 import re
+import json
 """
  Conifer conifer_scrub() and conifer_pluck() filters to interrogate
  variables that have not been defined.
@@ -37,7 +38,7 @@ class Varbilize:
     }
     '''
     if isinstance(d, dict):
-      print("Found a dictionary!")
+      print("Input d IS a dictionary!")
       print(d)
       for k in d.keys():
         if isinstance(d[k], dict):
@@ -54,9 +55,17 @@ class Varbilize:
           print("Found non-dictionary value!")
           print(d[k])
     else:
-      print("Not a dictionary!")
+      print("Input d is NOT a dictionary!")
       print(d)
-    return d
+
+    # check again!
+    print("What about now???")
+    if isinstance(d, dict):
+      print("Input d IS a dictionary!")
+    else:
+      print("Input d is NOT a dictionary!")
+
+    return json.dumps(d)
 
   def pluck(self, id, od = {}):
     '''
@@ -89,7 +98,8 @@ class Varbilize:
           del od[k]
       elif id[k] is None or (isinstance(id[k], basestring) and self.re_filter.match(id[k])):
         od[k] = id[k]
-    return od
+
+    return json.dumps(od)
 
 
 def conifer_pluck(a, term = '.*'):
