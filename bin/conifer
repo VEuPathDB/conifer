@@ -216,7 +216,6 @@ Available commands:
         '-e', 'conifer_log_vars=true',
       ])
 
-
     if os.path.isfile(self.conifer_home + '/' + self.cohort + '_playbook.yml'):
       playbook = self.conifer_home + '/' + self.cohort + '_playbook.yml'
     else:
@@ -344,7 +343,7 @@ Available commands:
 
   def _first_coniferhome_cohort_found(self):
     ''' return out first cohort found in Conifer home '''
-    for component, cohort in self.component_cohort_map.iteritems():
+    for component, cohort in self.component_cohort_map.items():
       p = self.gus_home + '/lib/conifer/roles/conifer/vars/' + cohort
       if self.verbose: print("Looking for '{}'".format(p))
       if os.path.isdir(p):
