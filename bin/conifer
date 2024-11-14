@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from six import iteritems
+
 '''
 Conifer is a configuration system for the GUS application framework.
 '''
@@ -333,7 +333,7 @@ Available commands:
       raise Exception('Was unable to complete installation.')
 
   def _first_website_cohort_root_found(self, hostname):
-    for component, cohort in self.component_cohort_map.iteritems():
+    for component, cohort in self.component_cohort_map.items():
       p = self.project_home + '/' + component
       if self.verbose: print("Looking for '{}'".format(p))
       if os.path.isdir(p):
@@ -359,7 +359,7 @@ Available commands:
        .format(component, sys.argv[0]))
 
   def _lookup_component(self, cohort):
-    for key, value in self.component_cohort_map.iteritems():
+    for key, value in self.component_cohort_map.items():
       if value == cohort:
         return key
     raise Exception("Cohort '{}' not found in the cohort_map dictionary defined in {}"
