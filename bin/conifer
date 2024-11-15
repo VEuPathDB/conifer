@@ -386,7 +386,7 @@ Available commands:
     yml_vars = {}
     with open(yml, 'r') as stream:
       try:
-        yml_vars = yaml.load(stream)
+        yml_vars = yaml.safe_load(stream)
       except yaml.YAMLError as yerr:
         raise Exception("Failed to parse {}: {}".format(yml, yerr))
     tmpl_vars = {}
