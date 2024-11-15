@@ -1,6 +1,6 @@
 from __future__ import (absolute_import, division, print_function)
 import time
-from six import string_types
+#from six import string_types
 from ansible import constants as C
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
@@ -109,7 +109,8 @@ class LookupModule(LookupBase):
 class Colfile:
 
   def lookup(self, key, col, data):
-    if isinstance(col, string_types):
+    data = str(data)
+    if isinstance(col, str):
       return self._return_by_field(key, col, data)
     if isinstance(col, int):
       return self._return_by_colindex(key, col, data)
