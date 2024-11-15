@@ -1,6 +1,5 @@
 from __future__ import (absolute_import, division, print_function)
 import time
-#from six import string_types
 from ansible import constants as C
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
