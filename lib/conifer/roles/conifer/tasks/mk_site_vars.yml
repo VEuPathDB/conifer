@@ -3,12 +3,12 @@
 # creating a minimal conifer_site_vars.yml file
 ---
 
-- include: load_template_mappings.yml
+- include_tasks: load_template_mappings.yml
   tags:
     - load_template_mappings
     - mk_site_vars
 
-- include: load_values.yml
+- include_tasks: load_values.yml
   tags:
     - load_values
     - mk_site_vars
