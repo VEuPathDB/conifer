@@ -28,6 +28,5 @@ class ActionModule(TemplateActionModule, ActionBase):
 
     custom_vars['hostvars'] = deepcopy(custom_vars)
     custom_vars['vars'] = deepcopy(custom_vars)
-    custom_vars['ansible_facts'] = task_vars['ansible_facts']
 
     return super(ActionModule, self).run(tmp, custom_vars)
