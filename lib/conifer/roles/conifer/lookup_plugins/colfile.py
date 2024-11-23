@@ -108,7 +108,7 @@ class LookupModule(LookupBase):
 class Colfile:
 
   def lookup(self, key, col, data):
-    data = str(data)
+    data = data.decode()
     if isinstance(col, str):
       return self._return_by_field(key, col, data)
     if isinstance(col, int):
@@ -120,7 +120,7 @@ class Colfile:
   def _return_by_row(self, key, data):
     match = {}
     fields = None
-    for line in data.splitlines(True):
+    for line in data.splitlines():
       if line.startswith('#'):
         continue
       if not line.strip():
