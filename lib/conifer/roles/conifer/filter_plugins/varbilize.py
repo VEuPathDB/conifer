@@ -37,12 +37,13 @@ class Varbilize:
     }
     '''
     if isinstance(d, dict):
-      for k in d.keys():
+      d2 = dict(d)
+      for k in d2.keys():
         if isinstance(d[k], dict):
           self.scrub(d[k])
           if len(d[k]) == 0:
             del d[k]
-        elif d[k] is None or (isinstance(d[k], basestring) and self.re_filter.match(d[k])):
+        elif d[k] is None or (isinstance(d[k], str) and self.re_filter.match(d[k])):
           del d[k]
     return d
 

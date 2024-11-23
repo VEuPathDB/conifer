@@ -1,7 +1,6 @@
 from __future__ import (absolute_import, division, print_function)
 import os
 import sys
-import exceptions
 import xml.etree.ElementTree as ET
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
@@ -12,16 +11,20 @@ except ImportError:
   from ansible.utils.display import Display
   display = Display()
 
-
 class LookupModule(LookupBase):
   '''
   Look up values from $HOME/.euparc for given XPath and Attribute.
   Throws exception if not found or returns 'default' value if that
   is defined.
   '''
+  logged_euparc = False
   def run(self, terms, variables=None, **kwargs):
     ret = []
     euparc = os.getenv("HOME") + '/.euparc'
+
+    if not LookupModule.logged_euparc:
+      display.display("Looking for euparc at " + euparc)
+      LookupModule.logged_euparc = True
 
     try:
       root = ET.parse(euparc).getroot()
