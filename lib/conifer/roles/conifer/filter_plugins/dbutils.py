@@ -53,6 +53,7 @@ class DbUtils:
     '''
     attempt to generate a short name from a jdbc connection url
     '''
+    jdbc = str(jdbc)
     if re.match(r'jdbc:oracle:oci:@', jdbc, re.IGNORECASE) is not None:
       # jdbc:oracle:oci:@toxoprod
       m = re.match(r'jdbc:oracle:oci:@(.+)', jdbc, re.IGNORECASE)
