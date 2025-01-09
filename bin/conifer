@@ -34,15 +34,19 @@ class WebhostPathResolver:
     (this needs to be refactored into a OS-level shared lib)
   '''
   def __init__(self, path):
+    print("Will derive website values from path: ", path)
     self.path = path
     self.product = self.product()
     self.context = self.context()
     self.servername = self.servername()
   def product(self):
-    return dirname(readlink(self.path))
+    print("Derived product: ", basename(dirname(readlink(self.path))))
+    return basename(dirname(readlink(self.path)))
   def context(self):
+    print("Derived context: ", basename(readlink(self.path)))
     return basename(readlink(self.path))
   def servername(self):
+    print("Derived servername: ", basename(self.path))
     return basename(self.path)
 
 class UsageMonitor(object):
