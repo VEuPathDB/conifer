@@ -74,12 +74,17 @@ class DbUtils:
       service_name = m.group(1)
       short_name = service_name.split('.')[0]
       return "{0}".format(short_name)
+    elif re.match(r'jdbc:oracle:thin:@//[^/]+.+:[0-9]+/(.+)', jdbc, re.IGNORECASE) is not None:
+      # jdbc:oracle:thin:@//someserver:port/acctdb.upenn.edu
+      m = re.match(r'jdbc:oracle:thin:@//[^/]+.+:[0-9]+/(.+)', jdbc, re.IGNORECASE)
+      service_name = m.group(1)
+      short_name = service_name.split('.')[0]
+      return "{0}".format(short_name)
     elif re.match(r'jdbc:postgresql://(?:[^/]+/)*(.+)', jdbc, re.IGNORECASE) is not None:
       # jdbc:postgresql://redux.gacrc.uga.edu:939/gus4
       m = re.match(r'jdbc:postgresql://(?:[^/]+/)*(.+)', jdbc, re.IGNORECASE)
       return "{0}".format(m.group(1))
     raise AnsibleFilterError("Unable to determine short name for jdbc string '{}'.".format(jdbc))
-
 
 def jdbc2Dbi(jdbc):
   util = DbUtils()
