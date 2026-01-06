@@ -76,7 +76,7 @@ class Varbilize:
         self.pluck(id[k], od[k])
         if len(od[k]) == 0:
           del od[k]
-      elif id[k] is None or (isinstance(id[k], basestring) and self.re_filter.match(id[k])):
+      elif id[k] is None or (isinstance(id[k], str) and self.re_filter.match(id[k])):
         od[k] = id[k]
     return od
 
